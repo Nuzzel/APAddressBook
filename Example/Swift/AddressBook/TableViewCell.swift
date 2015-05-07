@@ -19,9 +19,9 @@ class TableViewCell: DTTableViewCell {
     }
     
     override func updateWithModel(model: AnyObject!) {
-        let contact = model as APContact
-        self.imageView.image = contact.thumbnail
-        self.textLabel.text = self.contactName(contact)
+        let contact = model as! APContact
+        self.imageView?.image = contact.thumbnail
+        self.textLabel?.text = self.contactName(contact)
         self.detailTextLabel?.text = self.contactPhones(contact)
     }
     
