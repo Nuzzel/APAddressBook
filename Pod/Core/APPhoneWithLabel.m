@@ -10,12 +10,13 @@
 
 @implementation APPhoneWithLabel
 
-- (id)initWithPhone:(NSString *)phone label:(NSString *)label {
+- (id)initWithPhone:(NSString *)phone label:(NSString *)label labelType:(NSString *)labelType {
     self = [super init];
     if(self)
     {
         _phone = phone;
         _label = label;
+        _labelType = labelType;
     }
     return self;
 }

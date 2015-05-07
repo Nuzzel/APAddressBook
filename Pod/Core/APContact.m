@@ -146,8 +146,10 @@
         if (phone)
         {
             NSString *label = [self localizedLabelFromMultiValue:multiValue index:index];
+            NSString *labelType = [self labelTypeFromMultiValue:multiValue index:index];
             APPhoneWithLabel *phoneWithLabel = [[APPhoneWithLabel alloc] initWithPhone:phone
-                                                                                 label:label];
+                                                                                 label:label
+                                                                             labelType:labelType];
             [array addObject:phoneWithLabel];
         }
     }];
@@ -176,6 +178,18 @@
         CFRelease(rawLabel);
     }
     return label;
+}
+
+- (NSString *)labelTypeFromMultiValue:(ABMultiValueRef)multiValue index:(NSUInteger)index
+{
+    NSString *labelType;
+    CFTypeRef rawLabel = ABMultiValueCopyLabelAtIndex(multiValue, index);
+    if (rawLabel)
+    {
+        labelType = (__bridge_transfer NSString *)rawLabel;
+        CFRelease(rawLabel);
+    }
+    return labelType;
 }
 
 - (NSString *)compositeNameFromRecord:(ABRecordRef)recordRef
