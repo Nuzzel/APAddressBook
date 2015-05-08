@@ -10,6 +10,7 @@
 #import "APPhoneWithLabel.h"
 #import "APAddress.h"
 #import "APSocialProfile.h"
+#import "APInstantMessaging.h"
 
 @implementation APContact
 
@@ -95,6 +96,18 @@
             }
             
             _socialProfiles = profiles;
+        }
+        if (fieldMask & APContactFieldInstantMessaging)
+        {
+            NSMutableArray *instantMessagingAccounts = [[NSMutableArray alloc] init];
+            NSArray *array = [self arrayProperty:kABPersonInstantMessageProperty fromRecord:recordRef];
+            for (NSDictionary *dictionary in array)
+            {
+                APInstantMessaging *instantMessaging = [[APInstantMessaging alloc] initWithInstantMessaging:dictionary];
+                [instantMessagingAccounts addObject:instantMessaging];
+            }
+            
+            _instantMessaging = instantMessagingAccounts;
         }
         if (fieldMask & APContactFieldNote)
         {
@@ -187,7 +200,6 @@
     if (rawLabel)
     {
         labelType = (__bridge_transfer NSString *)rawLabel;
-        CFRelease(rawLabel);
     }
     return labelType;
 }
